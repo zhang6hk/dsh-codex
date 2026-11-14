@@ -34,7 +34,7 @@ dsh plugin add @zhang6hk/dsh-codex
 | `/codex-cancel <job-id>` | 取消任务 |
 | `/codex-setup` | 检查 CLI、登录与运行时 |
 
-审查类命令默认后台运行，加 `--wait` 前台等结果。常用参数：`--base <ref>`、`--scope auto|working-tree|branch`、`--model`、`--effort`。
+审查类命令在前台运行，Codex 直接在会话里输出审查结论（上游引擎的 review 没有后台模式）。`/codex-rescue` 默认后台执行并返回任务 ID。常用参数：`--base <ref>`、`--scope auto|working-tree|branch`、`--model`、`--effort`。
 
 除命令外还有一个 `codex_task` 工具，模型可以在对话里自行调用它把任务转给 Codex。
 

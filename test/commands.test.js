@@ -53,19 +53,18 @@ test('extractMode strips transport flags from the input', () => {
   assert.deepEqual(extractMode('--background 修 bug'), { wait: false, rest: '修 bug' })
 })
 
-test('review runs in the background by default and reports the job id', async () => {
+test('review always runs in the foreground and prints the engine report', async () => {
   const { calls, definitions } = harness()
   const result = await find(definitions, 'codex-review').handler(invocation('--base main'))
 
   assert.equal(result.kind, 'success')
-  assert.match(result.text, /job-1/u)
-  assert.match(result.text, /\/codex-status job-1/u)
+  assert.match(result.text, /done/u)
   const review = calls.find((call) => call.argv[0] === 'review')
-  assert.deepEqual(review.argv, ['review', '--base', 'main', '--background', '--json'])
+  assert.deepEqual(review.argv, ['review', '--base', 'main'])
   assert.equal(review.options.cwd, '/repo')
 })
 
-test('review --wait runs in the foreground', async () => {
+test('review honours --wait without changing the transport', async () => {
   const { calls, definitions } = harness()
   await find(definitions, 'codex-review').handler(invocation('--wait'))
   const review = calls.find((call) => call.argv[0] === 'review')
@@ -84,12 +83,12 @@ test('adversarial review forwards focus text', async () => {
   const { calls, definitions } = harness()
   await find(definitions, 'codex-adversarial-review').handler(invocation('--scope branch 质疑缓存设计'))
   const call = calls.find((entry) => entry.argv[0] === 'adversarial-review')
-  assert.deepEqual(call.argv, ['adversarial-review', '--scope', 'branch', '质疑缓存设计', '--background', '--json'])
+  assert.deepEqual(call.argv, ['adversarial-review', '--scope', 'branch', '质疑缓存设计'])
 })
 
-test('background launch is refused at the concurrency limit', async () => {
+test('background task launch is refused at the concurrency limit', async () => {
   const { definitions } = harness({ running: [{ id: 'a' }, { id: 'b' }] })
-  const result = await find(definitions, 'codex-review').handler(invocation(''))
+  const result = await find(definitions, 'codex-rescue').handler(invocation('修一下构建'))
   assert.equal(result.kind, 'error')
   assert.match(result.text, /上限 2/u)
 })
