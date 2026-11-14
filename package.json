@@ -1,0 +1,48 @@
+{
+  "name": "@zhang6hk/dsh-codex",
+  "version": "0.1.0",
+  "description": "Run Codex code reviews and delegate tasks from DeepSeek Harness.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "files": [
+    "lib",
+    "vendor",
+    "locale",
+    "cordis.patch.yml",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "README.zh.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "codex",
+    "code-review"
+  ],
+  "license": "Apache-2.0",
+  "author": "zhang6hk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhang6hk/dsh-codex.git"
+  },
+  "homepage": "https://github.com/zhang6hk/dsh-codex#readme",
+  "bugs": {
+    "url": "https://github.com/zhang6hk/dsh-codex/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

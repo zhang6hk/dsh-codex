@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Codex 协作",
+    "description": "在 DSH 里调用本机 Codex CLI 做代码审查，或把调查与修复任务交给它。"
+  }
+}

@@ -1,0 +1,7 @@
+- insert:
+    - id: dsh-codex
+      name: '@zhang6hk/dsh-codex'
+      config:
+        codexPath: codex
+        maxConcurrent: 2
+        timeoutMs: 1800000
