@@ -11,3 +11,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+This distribution (dsh-codex) vendors the unmodified contents of
+https://github.com/openai/codex-plugin-cc (plugins/codex/) under vendor/codex/,
+and adds a DeepSeek Harness adapter in lib/. Copyright 2026 OpenAI; the adapter
+is Copyright 2026 zhang6hk and licensed under the same Apache License, Version 2.0.
