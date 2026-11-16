@@ -34,7 +34,7 @@ dsh plugin add @zhang6hk/dsh-codex
 | `/codex-cancel <job-id>` | 取消任务 |
 | `/codex-setup` | 检查 CLI、登录与运行时 |
 
-审查类命令在前台运行，Codex 直接在会话里输出审查结论（上游引擎的 review 没有后台模式）。`/codex-rescue` 默认后台执行并返回任务 ID。常用参数：`--base <ref>`、`--scope auto|working-tree|branch`、`--model`。review 不接受 `--effort`（引擎只对 `task` 支持），传了会直接报错提示。
+审查类命令在前台运行，Codex 直接在会话里输出审查结论（上游引擎的 review 没有后台模式）。`/codex-rescue` 默认后台执行并返回任务 ID。常用参数：`--base <ref>`、`--scope auto|working-tree|branch`、`--model`，以及 `--cwd <目录>`：在别的工作树或仓库副本上审查（相对会话目录解析）。如果它返回「git diff 为空」，报告里会写明这次到底审的是哪个目录。review 不接受 `--effort`（引擎只对 `task` 支持），传了会直接报错提示。
 
 除命令外还有一个 `codex_task` 工具，模型可以在对话里自行调用它把任务转给 Codex。
 

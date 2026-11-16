@@ -32,7 +32,7 @@ Desktop: Plugins → Add plugin, then paste either spec. Restart the session and
 | `/codex-cancel <job-id>` | Cancel a task |
 | `/codex-setup` | Check CLI, login, and runtime |
 
-Reviews run in the foreground and print Codex's report directly (the upstream engine has no review background mode). `/codex-rescue` runs in the background by default and returns a job id. Flags: `--base <ref>`, `--scope auto|working-tree|branch`, `--model`. Reviews take no `--effort`: the engine only accepts it for `task`, so this plugin rejects it rather than passing it through.
+Reviews run in the foreground and print Codex's report directly (the upstream engine has no review background mode). `/codex-rescue` runs in the background by default and returns a job id. Flags: `--base <ref>`, `--scope auto|working-tree|branch`, `--model`, and `--cwd <dir>` to review another checkout or worktree (relative to the session directory). When the diff comes back empty the report names the directory it actually reviewed. Reviews take no `--effort`: the engine only accepts it for `task`, so this plugin rejects it rather than passing it through.
 
 There is also a `codex_task` tool, so the model can delegate a task to Codex inside a conversation.
 

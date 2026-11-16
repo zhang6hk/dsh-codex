@@ -58,3 +58,19 @@ test('task argv does not stack resume modes', () => {
   const { argv } = buildTaskArgv('--resume-last 继续', {})
   assert.deepEqual(argv, ['task', '--resume-last'])
 })
+
+test('review argv forwards an explicit --cwd', () => {
+  const { argv } = buildReviewArgv('review', '--base origin/develop --cwd .worktrees/feature', {})
+  assert.deepEqual(argv, ['review', '--base', 'origin/develop', '--cwd', '.worktrees/feature'])
+})
+
+test('task argv forwards an explicit --cwd', () => {
+  const { argv, prompt } = buildTaskArgv('--cwd ../other 修登录', {})
+  assert.deepEqual(argv, ['task', '--fresh', '--cwd', '../other'])
+  assert.equal(prompt, '修登录')
+})
+
+test('--cwd=value form is accepted', () => {
+  const { argv } = buildReviewArgv('review', '--cwd=/tmp/repo', {})
+  assert.deepEqual(argv, ['review', '--cwd', '/tmp/repo'])
+})

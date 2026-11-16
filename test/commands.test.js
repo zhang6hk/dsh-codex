@@ -199,3 +199,24 @@ test('codex_task surfaces engine failure as an error', async () => {
   })
   await assert.rejects(tool.execute({ prompt: 'x' }, { signal: undefined }), /不是 git 仓库/u)
 })
+
+test('an empty diff names the reviewed directory and points at --cwd', async () => {
+  const calls = []
+  const run = async (argv, options) => {
+    calls.push({ argv, options })
+    return { code: 0, stdout: 'The requested git diff is empty: HEAD equals the merge base.' }
+  }
+  const definitions = createCommandDefinitions({ run, resolveCwd: () => '/repo', settings })
+  const result = await find(definitions, 'codex-review').handler(invocation('--base origin/develop'))
+
+  assert.equal(result.kind, 'success')
+  assert.match(result.text, /\/repo/u)
+  assert.match(result.text, /--cwd/u)
+})
+
+test('review passes --cwd through to the engine', async () => {
+  const { calls, definitions } = harness()
+  await find(definitions, 'codex-review').handler(invocation('--base main --cwd .worktrees/x'))
+
+  assert.deepEqual(calls[0].argv, ['review', '--base', 'main', '--cwd', '.worktrees/x'])
+})
