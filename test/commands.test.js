@@ -79,6 +79,24 @@ test('native review refuses extra focus text', async () => {
   assert.equal(calls.length, 0)
 })
 
+test('review commands reject --effort instead of leaking it as focus text', async () => {
+  const { calls, definitions } = harness()
+  for (const name of ['codex-review', 'codex-adversarial-review']) {
+    const result = await find(definitions, name).handler(invocation('--effort high'))
+    assert.equal(result.kind, 'error')
+    assert.match(result.text, /--effort/u)
+  }
+  assert.equal(calls.length, 0)
+})
+
+test('configured effort stays out of review argv', async () => {
+  const { calls, definitions } = harness()
+  const deps = { run: async (argv) => { calls.push({ argv }); return { code: 0, stdout: 'done' } }, resolveCwd: () => '/repo', settings: normalizeSettings({ effort: 'medium' }) }
+  const review = createCommandDefinitions(deps).find((definition) => definition.name === 'codex-review')
+  await review.handler(invocation(''))
+  assert.deepEqual(calls[0].argv, ['review'])
+})
+
 test('adversarial review forwards focus text', async () => {
   const { calls, definitions } = harness()
   await find(definitions, 'codex-adversarial-review').handler(invocation('--scope branch 质疑缓存设计'))

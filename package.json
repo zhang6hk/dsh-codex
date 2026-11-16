@@ -1,6 +1,6 @@
 {
   "name": "@zhang6hk/dsh-codex",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Run Codex CLI code reviews and hand investigation or fix tasks to Codex from DeepSeek Harness.",
   "type": "module",
   "main": "lib/index.js",

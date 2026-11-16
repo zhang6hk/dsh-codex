@@ -32,6 +32,11 @@ test('review argv falls back to configured base', () => {
   assert.deepEqual(argv, ['adversarial-review', '--base', 'develop'])
 })
 
+test('review argv never carries reasoning effort', () => {
+  const { argv } = buildReviewArgv('review', '', { model: 'gpt-6.1-sol', effort: 'medium' })
+  assert.deepEqual(argv, ['review', '--model', 'gpt-6.1-sol'])
+})
+
 test('review argv drops unsupported flags', () => {
   const { argv, prompt } = buildReviewArgv('review', '--write 看一下', {})
   assert.deepEqual(argv, ['review'])

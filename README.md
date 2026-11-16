@@ -32,7 +32,7 @@ Desktop: Plugins → Add plugin, then paste either spec. Restart the session and
 | `/codex-cancel <job-id>` | Cancel a task |
 | `/codex-setup` | Check CLI, login, and runtime |
 
-Reviews run in the foreground and print Codex's report directly (the upstream engine has no review background mode). `/codex-rescue` runs in the background by default and returns a job id. Flags: `--base <ref>`, `--scope auto|working-tree|branch`, `--model`, `--effort`.
+Reviews run in the foreground and print Codex's report directly (the upstream engine has no review background mode). `/codex-rescue` runs in the background by default and returns a job id. Flags: `--base <ref>`, `--scope auto|working-tree|branch`, `--model`. Reviews take no `--effort`: the engine only accepts it for `task`, so this plugin rejects it rather than passing it through.
 
 There is also a `codex_task` tool, so the model can delegate a task to Codex inside a conversation.
 
@@ -47,7 +47,7 @@ Edit `config` in `cordis.patch.yml`:
       config:
         codexPath: codex       # Codex binary; use an absolute path if it is not on PATH
         model: ''              # default model, forwarded as --model
-        effort: ''             # default reasoning effort, forwarded as --effort
+        effort: ''             # default reasoning effort for /codex-rescue and codex_task (reviews ignore it)
         defaultBase: ''        # default review base, e.g. origin/main
         maxConcurrent: 2       # concurrent Codex tasks
         timeoutMs: 1800000     # per-run timeout (30 minutes)

@@ -34,7 +34,7 @@ dsh plugin add @zhang6hk/dsh-codex
 | `/codex-cancel <job-id>` | 取消任务 |
 | `/codex-setup` | 检查 CLI、登录与运行时 |
 
-审查类命令在前台运行，Codex 直接在会话里输出审查结论（上游引擎的 review 没有后台模式）。`/codex-rescue` 默认后台执行并返回任务 ID。常用参数：`--base <ref>`、`--scope auto|working-tree|branch`、`--model`、`--effort`。
+审查类命令在前台运行，Codex 直接在会话里输出审查结论（上游引擎的 review 没有后台模式）。`/codex-rescue` 默认后台执行并返回任务 ID。常用参数：`--base <ref>`、`--scope auto|working-tree|branch`、`--model`。review 不接受 `--effort`（引擎只对 `task` 支持），传了会直接报错提示。
 
 除命令外还有一个 `codex_task` 工具，模型可以在对话里自行调用它把任务转给 Codex。
 
@@ -49,7 +49,7 @@ dsh plugin add @zhang6hk/dsh-codex
       config:
         codexPath: codex       # Codex 可执行文件；非标准位置填绝对路径
         model: ''              # 默认模型，透传 --model
-        effort: ''             # 默认推理力度，透传 --effort
+        effort: ''             # /codex-rescue 与 codex_task 的默认推理力度（review 忽略）
         defaultBase: ''        # 默认审查基线，如 origin/main
         maxConcurrent: 2       # 同时运行的 Codex 任务上限
         timeoutMs: 1800000     # 单次任务超时（30 分钟）
